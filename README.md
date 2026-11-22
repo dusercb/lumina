@@ -1,12 +1,26 @@
 # Lumina
 
-A makeup and portrait-retouching app that runs entirely in the phone's browser. It finds the face
-and body with on-device models, turns the landmarks into soft region masks and runs every effect
-as a GPU shader. Photos never leave the phone.
+A makeup and retouching app that runs entirely in the phone's browser. It finds the face and body with
+on-device models, turns the landmarks into soft region masks, and runs every effect as a GPU shader.
+Photos never leave the phone.
+
+## How it works
+
+1. **Find the face and body.** MediaPipe runs on the device in WebAssembly: 478 face landmarks with
+   depth, a 33-point pose, and segmentation of the person, hair and skin.
+2. **Turn landmarks into regions.** Templates drawn once on MediaPipe's canonical face mesh are warped
+   onto each face through its 468 points, giving soft masks for skin, lips, eyes, irises, brows,
+   creases, hollows and contour zones.
+3. **Render on the GPU.** Every tool writes into four WebGL2 passes: retouch (skin, face and body), hair
+   (a strand-level matte, then colour and care), composite (makeup and background), and a final pass for
+   warps, crop and lens, relight, effects, colour grade and text.
+
+Nothing is produced by a generative image model. Every template, curve, texture and colour table is
+drawn or computed by Lumina's own code, and skin smoothing uses a classic bilateral filter.
 
 ## Tools
 
-The photo fills the screen. At the bottom, tabs
+In the editor, the photo fills the screen. At the bottom, tabs
 pick one of seven groups (Retouch, Face, Body, Makeup, Scene, Colour, Edit), and the row above them
 shows that group's tools; a dot on a tab means one of its tools is in use.
 Tapping a tool swaps that row for the tool's own options: colour swatches, icons, or thumbnails of
@@ -106,13 +120,6 @@ Freeze bg rebuilds the background behind the subject in the background: a smooth
 patch fill a second or two later. If
 WebAssembly is blocked, the face tools switch off with a message and Smooth, Blemish, Eraser,
 Stamp, Texture, Filters, Adjust, Crop and Text keep working.
-
-## Notes
-
-Every template, curve and texture is drawn or computed by Lumina's own code. Skin smoothing
-deliberately uses the bilateral filter (1998) rather than a patented commercial method. Sculpt's
-approach, deformation fields built on a face mesh, is close to what a commercial patent claims;
-check that before any commercial use.
 
 ## Credits
 
