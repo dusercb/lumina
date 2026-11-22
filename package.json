@@ -1,0 +1,12 @@
+{
+  "name": "lumina",
+  "version": "1.0.0",
+  "private": true,
+  "description": "On-device makeup and portrait retouching in the browser: face landmarks, region masks and GPU effects.",
+  "type": "module",
+  "scripts": {
+    "start": "node server.mjs",
+    "phone": "node server.mjs --lan",
+    "build:artifact": "node tools/make-artifact.mjs"
+  }
+}
