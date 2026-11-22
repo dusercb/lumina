@@ -2,7 +2,7 @@
 
 A makeup and retouching app that runs entirely in the phone's browser. It finds the face and body with
 on-device models, turns the landmarks into soft region masks, and runs every effect as a GPU shader.
-Photos never leave the phone.
+Photos never leave the phone. **[Try it live](https://danielcollison.dev/lumina/)**.
 
 ## How it works
 
